@@ -51,6 +51,11 @@ LOCAL_SRC_FILES += \
     base/atomicops_internals_x86_gcc.cc
 endif
 
+ifeq ($(TARGET_$(combo_2nd_arch_prefix)ARCH),x86)
+LOCAL_SRC_FILES += \
+    base/atomicops_internals_x86_gcc.cc
+endif
+
 LOCAL_SRC_FILES += \
     base/at_exit.cc \
     base/base64.cc \

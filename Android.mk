@@ -12,7 +12,7 @@ LOCAL_CPP_EXTENSION := .cc
 
 LOCAL_MODULE := libchromium_net
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-INTERMEDIATES := $(call local-intermediates-dir)
+INTERMEDIATES := $(call local-generated-sources-dir)
 
 LOCAL_SRC_FILES := \
     googleurl/src/gurl.cc \
@@ -46,10 +46,8 @@ LOCAL_SRC_FILES := \
     app/sql/statement.cc \
     app/sql/transaction.cc \
 
-ifeq ($(TARGET_$(combo_2nd_arch_prefix)ARCH),x86)
-LOCAL_SRC_FILES += \
+LOCAL_SRC_FILES_x86 += \
     base/atomicops_internals_x86_gcc.cc
-endif
 
 LOCAL_SRC_FILES += \
     base/at_exit.cc \
@@ -481,8 +479,6 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_STATIC_LIBRARIES := libevent modp_b64 dmg_fp
 LOCAL_SHARED_LIBRARIES := libstlport libexpat libcrypto libssl libz libicuuc libicui18n libsqlite libcutils liblog libdl
-
-LOCAL_PRELINK_MODULE := false
 
 # Including this will modify the include path
 include external/stlport/libstlport.mk

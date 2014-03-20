@@ -49,6 +49,9 @@ LOCAL_SRC_FILES := \
 LOCAL_SRC_FILES_x86 += \
     base/atomicops_internals_x86_gcc.cc
 
+LOCAL_SRC_FILES_x86_64 += \
+    base/atomicops_internals_x86_gcc.cc
+
 LOCAL_SRC_FILES += \
     base/at_exit.cc \
     base/base64.cc \

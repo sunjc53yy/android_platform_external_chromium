@@ -10,10 +10,15 @@
 #define BASE_ATOMICOPS_INTERNALS_ARM64_GCC_H_
 #pragma once
 
+#include <stdatomic.h>
+
 namespace base {
 namespace subtle {
 
 #include <cutils/atomic-arm64.h>
+
+// TODO: Convert the rest of these to C++11 (or C11) atomics.
+// Or, even better, convert the clients.
 
 inline Atomic32 NoBarrier_CompareAndSwap(volatile Atomic32* ptr,
                                          Atomic32 old_value,
@@ -29,18 +34,16 @@ inline Atomic32 NoBarrier_CompareAndSwap(volatile Atomic32* ptr,
   return prev_value;
 }
 
+typedef volatile _Atomic(Atomic64)* atomic64_ptr_t;
+
 inline Atomic64 NoBarrier_CompareAndSwap(volatile Atomic64* ptr,
                                          Atomic64 old_value,
                                          Atomic64 new_value) {
-  Atomic64 prev_value = *ptr;
-  do {
-    if (!android_atomic_cas64(old_value, new_value,
-                             const_cast<Atomic64*>(ptr))) {
-      return old_value;
-    }
-    prev_value = *ptr;
-  } while (prev_value == old_value);
-  return prev_value;
+  Atomic64 old = old_value;
+  atomic_compare_exchange_strong_explicit(
+                reinterpret_cast<atomic64_ptr_t>(ptr),
+                &old, new_value, memory_order_relaxed, memory_order_relaxed);
+  return old;  // possibly replaced by CAS
 }
 
 inline Atomic32 NoBarrier_AtomicExchange(volatile Atomic32* ptr,

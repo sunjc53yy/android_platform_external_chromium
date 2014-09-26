@@ -7,6 +7,7 @@ include external/chromium/third_party/modp_b64/Android.mk
 include external/chromium/base/third_party/dmg_fp/Android.mk
 
 include $(CLEAR_VARS)
+LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
 
 LOCAL_CPP_EXTENSION := .cc
 
@@ -481,7 +482,7 @@ LOCAL_C_INCLUDES := \
 	$(LOCAL_C_INCLUDES)
 
 LOCAL_STATIC_LIBRARIES := libevent modp_b64 dmg_fp
-LOCAL_SHARED_LIBRARIES := libstlport libexpat libcrypto libssl libz libicuuc libicui18n libsqlite libcutils liblog libdl
+LOCAL_SHARED_LIBRARIES := libexpat libcrypto libssl libz libicuuc libicui18n libsqlite libcutils liblog libdl
 
 # Including this will modify the include path
 include external/stlport/libstlport.mk

@@ -9,6 +9,10 @@ include external/chromium/base/third_party/dmg_fp/Android.mk
 include $(CLEAR_VARS)
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
 
+# There are many Clang compilation errors we do not have
+# time to fix before testing other project with Clang.
+LOCAL_CLANG := false
+
 LOCAL_CPP_EXTENSION := .cc
 
 LOCAL_MODULE := libchromium_net
